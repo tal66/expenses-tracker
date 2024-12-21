@@ -1,0 +1,5 @@
+data_folder = "./data"
+
+[max_credentials]
+username = ""
+password = ""

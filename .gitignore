@@ -1,3 +1,4 @@
-visa_web_settings_dev.py
+*_dev.py
+*_dev.toml
 experiment/
 .idea
