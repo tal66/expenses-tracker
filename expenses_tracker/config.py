@@ -45,7 +45,3 @@ class Config:
     @property
     def gemini(self):
         return self._config['gemini']
-
-    @property
-    def app(self):
-        return self._config['app']

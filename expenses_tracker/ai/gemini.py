@@ -31,14 +31,14 @@ def get_user_expenses():
     return "\n\n".join([f"{Path(f).read_text()}" for f in files])
 
 
-def get_user_insights(prompt="") -> Path:
+def get_user_insights(prompt="") -> Path or None:
     if os.getenv('DEMO') == '1':
         insights_file = Path(DATA_DIR) / "demo_insights.md"
         return insights_file
     else:
         if not GEMINI_KEY:
             logger.error("Gemini key not configured")
-            return ""
+            return None
         genai.configure(api_key=GEMINI_KEY)
 
         model_str = "gemini-1.5-flash"
