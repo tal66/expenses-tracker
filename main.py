@@ -32,11 +32,12 @@ def run_ui():
 if __name__ == '__main__':
 
     # os.environ['DEMO'] = '1'
-    if ((len(sys.argv) == 2) and (sys.argv[1] == 'demo')) or os.getenv('DEMO'):
+    if ((len(sys.argv) >= 2) and (sys.argv[1] == 'demo')) or os.getenv('DEMO'):
         os.environ['DEMO'] = '1'
         logger.info("demo mode")
 
-        excel_files = list(Path(config.data_folder).glob('demo*.xlsx'))
+        excel_files = list(
+            Path(config.data_folder).glob('demo*.xlsx'))  # demo excel generates random amounts when opened
         for file in excel_files:
             process_credit_files.to_markdown(str(file))
 

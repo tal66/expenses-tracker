@@ -2,7 +2,7 @@
 
 Easy-to-use credit expenses downloader, tracker and visualizer, with AI insights.
 
-<img src="app.png" style="max-width: 500px;">
+<img src="app.png" width=500>
 
 
 ## Start
@@ -48,7 +48,8 @@ AI Insights:
 
 ## Install
 
-Fill in credit card credentials in `config.toml`. Then:
+Fill in credit card credentials in `config.toml`, and optionally add Gemini API key.
+Then:
 
 ```bash
 pip install -e .
