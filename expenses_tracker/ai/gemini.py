@@ -15,7 +15,7 @@ logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(name)s - %(leve
 
 
 def get_user_background():
-    user_background_file = Path(DATA_DIR) / "user_background.text"
+    user_background_file = Path(DATA_DIR) / "user_background.txt"
     with open(user_background_file, 'r') as f:
         return f.read()
 
