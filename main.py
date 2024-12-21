@@ -31,7 +31,7 @@ def run_ui():
 
 if __name__ == '__main__':
 
-    os.environ['DEMO'] = '1'
+    # os.environ['DEMO'] = '1'
     if ((len(sys.argv) == 2) and (sys.argv[1] == 'demo')) or os.getenv('DEMO'):
         os.environ['DEMO'] = '1'
         logger.info("demo mode")

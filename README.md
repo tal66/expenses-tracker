@@ -2,6 +2,9 @@
 
 Easy-to-use credit expenses downloader, tracker and visualizer, with AI insights.
 
+<img src="app.png" style="max-width: 500px;">
+
+
 ## Start
 
 See instructions in the [Install](#install) section, and then:
@@ -15,6 +18,8 @@ To run DEMO expenses data:
 ```bash
 python main.py demo
 ```
+
+
 
 ## Features
 
