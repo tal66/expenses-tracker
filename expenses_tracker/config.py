@@ -8,6 +8,7 @@ logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(name)s - %(leve
 
 root_proj = Path(__file__).parent.parent
 
+
 class Config:
     _instance = None
     _config = {}
@@ -31,7 +32,7 @@ class Config:
         return self._config[key]
 
     @property
-    def downloads_folder(self) -> str:
+    def data_folder(self) -> str:
         dl_dir = self._config['data_folder']
         if dl_dir.startswith('.'):
             dl_dir = str(root_proj / dl_dir)
@@ -40,3 +41,11 @@ class Config:
     @property
     def max_credentials(self):
         return self._config['max_credentials']
+
+    @property
+    def gemini(self):
+        return self._config['gemini']
+
+    @property
+    def app(self):
+        return self._config['app']

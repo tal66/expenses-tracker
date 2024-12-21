@@ -1,4 +1,5 @@
 import logging
+import os
 from datetime import datetime
 from pathlib import Path
 
@@ -14,7 +15,7 @@ logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(name)s - %(leve
 st.set_page_config(page_title="Expenses Dashboard", layout="wide")
 
 config = Config()
-INPUT_FILES_DIR = config.downloads_folder
+INPUT_FILES_DIR = config.data_folder
 
 
 def clean_amount(amount):
@@ -134,12 +135,12 @@ def categories_tab(filtered_df, tab1):
                     y=category_data['קטגוריה'],
                     orientation='h',
                     marker=dict(
-                        color=['black', ],
+                        color='#213555',
                         opacity=0.8
                     ),
                     text=[f'{x:,.1f}' for x in category_data['סכום חיוב']],
                     textposition='auto',
-                    textfont=dict(size=14 if len(category_data) < 10 else 12),
+                    textfont=dict(size=14 if len(category_data) < 10 else 13),
                 )
             ])
 
@@ -171,13 +172,6 @@ def categories_tab(filtered_df, tab1):
                 height=500,
                 template='seaborn',
                 showlegend=True,
-                legend=dict(
-                    orientation="h",
-                    yanchor="auto",
-                    # y=-1.1,
-                    xanchor="center",
-                    x=0.5
-                ),
                 margin=dict(l=10, r=10, t=10, b=10),
             )
 
@@ -248,8 +242,8 @@ def monthly_bar_tab(df, tab2):
                     axis=1
                 ),
                 textposition='auto',
-                width=0.5,  # This sets the width of the bars (0-1)
-                marker_color='#82ca9d'  # color for the bars
+                width=0.5,  # sets the width of the bars (0-1)
+                marker_color='#82ca9d'
             )
         ])
 
@@ -265,12 +259,39 @@ def monthly_bar_tab(df, tab2):
         st.plotly_chart(fig, use_container_width=True)
 
 
+def ai_insights_tab(insights_file_path, tab4):
+    with tab4:
+        st.subheader("💡 AI Insights")
+        insights_content = None
+        try:
+            with open(insights_file_path, 'r', encoding='utf-8') as file:
+                insights_content = file.read()
+        except Exception as e:
+            logger.error(f"Error loading AI insights: {e}")
+
+        st.markdown(insights_content)
+
+        # Add a timestamp for when insights were last updated
+        st.markdown("---")
+        st.caption("Last updated: " + datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+
+
 def main():
     st.title("📊 Expenses Dashboard")
 
     # find md files
+    if os.getenv('DEMO') == '1':
+        logger.info("using demo files")
+        files = list(Path(INPUT_FILES_DIR).glob('*demo_expenses*.md'))
+        insights_file = Path(INPUT_FILES_DIR) / 'demo_insights.md'
+    else:
+        files = list(Path(INPUT_FILES_DIR).glob('*transactions*.md'))
+        # latest insights file
+        insights_files = list(Path(INPUT_FILES_DIR).glob('user_insights_gemini_*.md'))
+        insights_files.sort(key=os.path.getmtime, reverse=True)
+        insights_file = insights_files[0] if insights_files else None
 
-    files = list(Path(INPUT_FILES_DIR).glob('*transactions*.md'))
+    logger.debug(f"insights file: {insights_file}")
     logger.info(f"found {len(files)} markdown files.")
 
     df = pd.DataFrame()
@@ -290,16 +311,12 @@ def main():
     logger.debug(sorted(df['חודש חיוב'].unique().tolist()))
 
     # print(df.head())
-    # print(sorted(df['חודש חיוב'].unique().tolist()))
 
-    # filters in sidebar
     st.sidebar.header("Filters")
-
-    # Month filter
     available_months = ['All'] + sorted(df['חודש חיוב'].unique().tolist(), reverse=True)
     selected_month = st.sidebar.selectbox("Select Month", available_months)
 
-    # Filter data based on selection
+    # filter data based on selection
     if selected_month != 'All':
         filtered_df = df[df['חודש חיוב'] == selected_month]
     else:
@@ -313,10 +330,11 @@ def main():
         st.metric("Number of Transactions", len(filtered_df))
 
     # tabs
-    tab1, tab2, tab3 = st.tabs(["Categories", "Monthly Trends", "Transactions"])
+    tab1, tab2, tab3, tab4 = st.tabs(["Categories", "Monthly Trends", "Transactions", "AI Insights"])
     categories_tab(filtered_df, tab1)
     monthly_bar_tab(df, tab2)
     transactions_table_tab(filtered_df, tab3)
+    ai_insights_tab(insights_file, tab4)
 
 
 if __name__ == "__main__":

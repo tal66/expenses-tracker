@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(name)s - %(leve
 ########
 
 config = Config()
-DOWNLOADS_DIR = config.downloads_folder
+DOWNLOADS_DIR = config.data_folder
 
 if not DOWNLOADS_DIR:
     DOWNLOADS_DIR = './data'

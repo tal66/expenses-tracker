@@ -3,3 +3,10 @@ data_folder = "./data"
 [max_credentials]
 username = ""
 password = ""
+
+[gemini]
+key = ""
+
+[app] # what to run
+run_max_download = true
+run_gemini = true
