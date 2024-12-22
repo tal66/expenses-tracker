@@ -99,11 +99,10 @@ def login_and_download_from_max(username: str, password: str):
                 # (it downloads partial file if pressing first on current month)
 
         except Exception as e:
-            logger.error(e)
             logger.exception(e)
 
         finally:
-            time.sleep(10)  # keep browser open for debugging
+            time.sleep(7)  # keep browser open for debugging
             browser.close()
             return downloaded_files
 

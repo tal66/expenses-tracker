@@ -33,7 +33,7 @@ One-click to:
 Automation:
 - Download expenses data from credit card provider (currently only supports 'Max' credit cards)
 - App is set to download last quarter files (can be changed in the code)
-- Note: you may get different popups than me, and have to alter the code to handle them manually
+- Note: you may get different popups than me, and have to alter the code or handle them manually. It runs in ~20 seconds for me (could be faster, but allows the user to see what's happening, and the site to load)
 
 UI:
 - Expense category analysis with bar and pie charts
@@ -48,7 +48,8 @@ AI Insights:
 
 ## Install
 
-Fill in credit card credentials in `config.toml`, and optionally add Gemini API key.
+Fill in credit card credentials in `config.toml`, and optionally add Gemini API key,  
+and user background in `expenses_tracker/data/user_background.txt`.
 Then:
 
 ```bash
