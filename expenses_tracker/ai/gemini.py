@@ -41,6 +41,9 @@ def get_user_insights(prompt="") -> Path or None:
             return None
         genai.configure(api_key=GEMINI_KEY)
 
+        if not prompt:
+            prompt = get_prompt()
+
         model_str = "gemini-1.5-flash"
         model = genai.GenerativeModel(model_str)
         logger.info(f"generating content from gemini. model={model_str}")
