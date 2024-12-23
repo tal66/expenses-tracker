@@ -19,7 +19,7 @@ To run DEMO expenses data:
 python main.py demo
 ```
 
-
+⚠️ If you do not have software development knowledge OR if you are not aware of the benefits as well as dangers of using automations that are given permissions on your behalf - it is advised not to use this app. In any case, you must read the [Legal](#legal) section before using this software.
 
 ## Features
 
@@ -71,7 +71,9 @@ playwright install
 
 ## Legal
 
-This is a hobby project 📚 and the developer does not profit from its use, and is also not affiliated with any credit card provider.
+This is a hobby project 📚 and the developer does not profit from its use, and is also not affiliated with any credit card provider. The project is meant to encourage people to track their expenses in an easier way than is possible with all existing credit card providers. 
+
+The developer is happy with the credit card providers she uses, and is only trying to make the process of tracking expenses easier.
 
 But since this is a project involving financial data and decisions, 
 here are some legal notes regarding the use of this software:
@@ -83,6 +85,8 @@ legal notes
 The developer is not affiliated with any credit card provider, and does not guarantee the accuracy of the data downloaded from the credit card provider. The user is responsible for verifying the data. 
 
 The developer is not affiliated with any AI service suggested in the app and does not guarantee the accuracy of the AI insights.
+
+The developer does not encourage or discourage the sharing of expenses data with AI services - it is up to the user to decide, and to read the AI services terms.
 
 It is the user's responsibility to keep credentials and data secure on his or her machine only. It is the user's responsibility not to share credentials with anyone, including AI services.
 
