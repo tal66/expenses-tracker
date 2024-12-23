@@ -28,12 +28,19 @@ One-click to:
 - Visualize expenses by categories and months
 - Get AI-powered insights
 
+Less than 60 seconds to get a full picture of your expenses.
+
 ---
 
 Automation:
 - Download expenses data from credit card provider (currently only supports 'Max' credit cards)
 - App is set to download last quarter files (can be changed in the code)
-- Note: you may get different popups than me, and have to alter the code or handle them manually. It runs in ~20 seconds for me (could be faster, but allows the user to see what's happening, and the site to load)
+- Notes: 
+  - You may get different popups than me, and have to alter the code or handle them manually.
+  - It downloads the files in ~20 seconds for me. It could be faster and headless, but the current way: 
+      - allows the user to see what's happening and whether the site changed since the last time 
+      - allows the site to load at each step
+      - ideally, the user+password permissions would be READ only, but they grant WRITE permissions. If it was READ only, I wouldn't care and just run it in the background fast, but that's not the case. 
 
 UI:
 - Expense category analysis with bar and pie charts
@@ -45,6 +52,8 @@ AI Insights:
 - Summary
 - Suggestions and insights
 
+
+Possible TODO: add automation to download the pdf files as well, and not just the Excel files, and compare the sums to be sure that the Excel data is full and correct (the pdf is always final).  
 
 ## Install
 
