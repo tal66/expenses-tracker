@@ -35,7 +35,7 @@ class Config:
     def data_folder(self) -> str:
         dl_dir = self._config['data_folder']
         if dl_dir.startswith('.'):
-            dl_dir = str(root_proj/ "expenses_tracker" / dl_dir)
+            dl_dir = str(root_proj / dl_dir)
         return dl_dir
 
     @property

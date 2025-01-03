@@ -20,6 +20,7 @@ python main.py demo
 ```
 
 ⚠️ If you do not have software development knowledge OR if you are not aware of the benefits as well as dangers of using automations that are given permissions on your behalf - it is advised not to use this app. In any case, you must read the [Legal](#legal) section before using this software.
+<br/>That said, there's a 99% (made up number) chance it's just fine, and I use it.
 
 ## Features
 
@@ -53,7 +54,7 @@ AI Insights:
 - Suggestions and insights
 
 
-Possible TODO: add automation to download the pdf files as well, and not just the Excel files, and compare the sums to be sure that the Excel data is full and correct (the pdf is always final).  
+Done: ~~Possible TODO~~: add automation to download the pdf files as well, and compare sums to be sure that the Excel data is full and correct (the pdf is always final).
 
 ## Install
 
@@ -71,7 +72,7 @@ playwright install
 
 ## Legal
 
-This is a hobby project 📚 and the developer does not profit from its use, and is also not affiliated with any credit card provider. The project is meant to encourage people to track their expenses in an easier way than is possible with all existing credit card providers. 
+This is a hobby project 📚 and the developer does not profit from its use, and is also not affiliated with any credit card provider. The project is meant to encourage people to track their expenses in an easier way than is possible with all existing credit card providers, and for free. 
 
 The developer is happy with the credit card providers she uses, and is only trying to make the process of tracking expenses easier.
 

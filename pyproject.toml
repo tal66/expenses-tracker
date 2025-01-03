@@ -8,6 +8,7 @@ dependencies = [
     "plotly~=5.24.1",
     "playwright~=1.49.1",
     "markitdown~=0.0.1a3",
+    "pypdf~=5.1.0",
     "google-generativeai",
 ]
 

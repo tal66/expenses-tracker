@@ -1,4 +1,4 @@
-data_folder = "./data"
+data_folder = "./expenses_tracker/data"
 
 [max_credentials]
 username = ""
