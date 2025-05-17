@@ -14,7 +14,6 @@ from expenses_tracker.config import Config
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
-
 ########
 
 config = Config()
@@ -57,6 +56,9 @@ def login_and_download_from_max(username: str, password: str):
             # menu איזור אישי
             page.wait_for_selector("span:has-text('כניסה לאיזור האישי')", timeout=5_000)
             page.locator("span:has-text('כניסה לאיזור האישי')").click()
+            # sub menu לקוחות פרטיים
+            page.wait_for_selector("span:has-text('לקוחות פרטיים')", timeout=5_000)
+            page.locator("span:has-text('לקוחות פרטיים')").click()
 
             # fill in login form
             page.locator("a#login-password-link").click()
@@ -290,26 +292,27 @@ def format_month(month_str: str) -> str:
     return f"{year}-{month_num}"
 
 
-def compare_excel_to_pdf(downloaded_files):
-    filtered_files = [f for f in downloaded_files if 'future' not in f]
-    pdfs = [f for f in filtered_files if f.endswith('.pdf')]
-    excels = [f for f in filtered_files if f.endswith('.xlsx')]
+def compare_excel_to_pdf(downloaded_files, allowed_diff=0.01):
+    filtered_files = [f for f in downloaded_files if "future" not in f]
+    pdfs = [f for f in filtered_files if f.endswith(".pdf")]
+    excels = [f for f in filtered_files if f.endswith(".xlsx")]
 
     for pdf_file in pdfs:
         pdf_file_name = Path(pdf_file).stem
         try:
             pdf_sums = get_pdf_sums(pdf_file)
+            pdf_sums.sort()
         except Exception as e:
             logger.exception(e)
             continue
 
         # lookup dddd-dd
-        match = re.search(r'\d{4}-\d{2}', pdf_file_name)
+        match = re.search(r"\d{4}-\d{2}", pdf_file_name)
         if match:
             yyyy_mm = match.group()
             excel_files_match = [f for f in excels if (yyyy_mm in f)]
             logging.debug(f"pdf: '{pdf_file}', match excel_files: {excel_files_match}")
-            for f in excel_files_match:
+            for f in excel_files_match:  # supposed to be just one file, but anyway
                 if not os.path.exists(f):
                     logger.warning(f"{f} not found")
                     continue
@@ -319,11 +322,12 @@ def compare_excel_to_pdf(downloaded_files):
                 logger.debug(f"pdf: {pdf_sums}, excel: {excel_sums}")
 
                 # cmp
-                pdf_sums.sort()
                 excel_sums.sort()
-                allowed_diff = 0.01
                 sums_ok = True
                 for i in range(len(pdf_sums)):
+                    if i >= len(excel_sums):
+                        logger.warning(f"pdf: {pdf_sums[i]}, excel: missing")
+                        break
                     if abs(pdf_sums[i] - excel_sums[i]) > allowed_diff:
                         logger.warning(f"pdf: {pdf_sums[i]}, excel: {excel_sums[i]}")
                         sums_ok = False
@@ -332,7 +336,7 @@ def compare_excel_to_pdf(downloaded_files):
                     logger.info(f"sums OK")
 
 
-def get_pdf_sums(pdf_file):
+def get_pdf_sums(pdf_file) -> list:
     reader = pypdf.PdfReader(pdf_file)
     num_pages = len(reader.pages)
     texts = []
@@ -346,9 +350,9 @@ def get_pdf_sums(pdf_file):
     pdf_sums = []
     for i in range(len(lines)):
         line = lines[i]
-        if ('חיובים' in line) and ('בתאריך' in line):
+        if ("חיובים" in line) and ("בתאריך" in line):
             sum_line = lines[i + 2]
-            sum = sum_line.replace(',', '')
+            sum = sum_line.replace(",", "")
             sum = float(sum)
             pdf_sums.append(sum)
     return pdf_sums
